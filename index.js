@@ -1,21 +1,31 @@
 const express = require('express');
-
 const urlRoute = require('./routes/url')
-
+const path = require('path')
 const { connectMongoDb } = require('./connect')
-const URL = require('./models/url')
+const URL = require('./models/url');
+const { url } = require('inspector');
 
 const app = express();
 
 PORT = 8000;
 connectMongoDb("mongodb+srv://rishabhraj:rraj0046@url-cluster.sfjhlb6.mongodb.net/?retryWrites=true&w=majority").then(() => console.log("MongoDB Connected"));
 
+app.set('view engine', 'ejs');
+
+app.set("views", path.resolve("./views"));
+
 app.use(express.json())
 
 app.use('/url', urlRoute)
 
 
-app.get('/:shortId', async (req, res) => {
+app.get('/test', async (req, res) => {
+    const allUrls = await URL.find({})
+    return res.render('home',{urls:allUrls})
+})
+
+
+app.get('/url/:shortId', async (req, res) => {
     const shortId = req.params.shortId;
 
     const entry = await URL.findOneAndUpdate({ shortId: shortId }, {
