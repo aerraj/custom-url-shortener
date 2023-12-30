@@ -1,10 +1,18 @@
 const express = require('express');
-const urlRoute = require('./routes/url')
-const staticRoute = require('./routes/staticRouter')
 const path = require('path')
 const { connectMongoDb } = require('./connect')
 const URL = require('./models/url');
 const { url } = require('inspector');
+
+//Routes
+
+const urlRoute = require('./routes/url')
+const staticRoute = require('./routes/staticRouter')
+const userRoute = require('./routes/user')
+
+
+
+
 
 const app = express();
 
@@ -21,8 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/', staticRoute)
-
 app.use('/url', urlRoute)
+app.use('/user', userRoute)
 
 app.get('/test', async (req, res) => {
     const allUrls = await URL.find({})
