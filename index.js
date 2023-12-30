@@ -19,7 +19,7 @@ app.use(express.json())
 
 app.use('/url', urlRoute)
 
-
+app.use('/', staticRoute)
 app.get('/test', async (req, res) => {
     const allUrls = await URL.find({})
     return res.render('test', { urls: allUrls })
