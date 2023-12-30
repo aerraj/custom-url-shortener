@@ -1,5 +1,6 @@
 const express = require('express');
 const urlRoute = require('./routes/url')
+const staticRoute = require('./routes/staticRouter')
 const path = require('path')
 const { connectMongoDb } = require('./connect')
 const URL = require('./models/url');
@@ -21,7 +22,7 @@ app.use('/url', urlRoute)
 
 app.get('/test', async (req, res) => {
     const allUrls = await URL.find({})
-    return res.render('home',{urls:allUrls})
+    return res.render('test', { urls: allUrls })
 })
 
 
