@@ -18,6 +18,7 @@ app.set("views", path.resolve("./views"));
 app.use(express.json())
 
 app.use('/url', urlRoute)
+app.use('/public', express.static('public'));
 
 app.use('/', staticRoute)
 app.get('/test', async (req, res) => {
