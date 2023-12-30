@@ -8,6 +8,29 @@
 </head>
 <body>
     <h1 id="header">URL Shortener</h1>
+    <% if (locals.id) { %>
+    <p>
+     URL Generated: http://localhost:8000/url/<%=id%></p>
+    <% } %>
+    <div class="form-div">
+        <form method="POST" action="/url" >
+            <label>Enter Your Original URL</label>
+            <input type="text" placeholder="https://example.com" name="url" id="">
+                    <button type="submit">Generate</button>
+        </form>
+
+    </div>
+    <div>
+        <% if(locals.urls){%>
+         <table>
+            <thead>
+                <th>S.No</th>
+                <th>ShortID</th>
+                <th>Clicks</th>
+            </thead>
+         </table>
+        <%}%>
+    </div>
 
 </body>
 </html>

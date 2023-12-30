@@ -14,13 +14,16 @@ connectMongoDb("mongodb+srv://rishabhraj:rraj0046@url-cluster.sfjhlb6.mongodb.ne
 app.set('view engine', 'ejs');
 
 app.set("views", path.resolve("./views"));
-
+app.use('/public', express.static('public'));
 app.use(express.json())
 
-app.use('/url', urlRoute)
-app.use('/public', express.static('public'));
+app.use(express.urlencoded({ extended: false }));
+
 
 app.use('/', staticRoute)
+
+app.use('/url', urlRoute)
+
 app.get('/test', async (req, res) => {
     const allUrls = await URL.find({})
     return res.render('test', { urls: allUrls })
