@@ -1,16 +1,17 @@
 const jwt = require('jsonwebtoken');
 const secret="2112300@rajat";
 function setUser( user) {
-try{
+// try{
   return jwt.sign({
     _id: user._id,
     email: user.email,
+    role: user.role,
 
   },secret);
-}
-catch(err){
-  console.log(err);
-}
+// }
+// catch(err){
+//   console.log(err);
+// }
 }
 
 function getUser(token) {

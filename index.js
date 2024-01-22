@@ -4,7 +4,7 @@ const { connectMongoDb } = require('./connect')
 const URL = require('./models/url');
 const { url } = require('inspector');
 const cookieParser=require('cookie-parser')
-const {restrictToLoggedinUserOnly,checkAuth}=require("./middleware/auth")
+const {checkForAuthentication,restrictTo}=require("./middleware/auth")
 //Routes
 
 const urlRoute = require('./routes/url')
@@ -27,13 +27,14 @@ app.use('/public', express.static('public'));
 app.use(express.json())
 
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(checkForAuthentication);
 
 
+//restrictTo is an inline middleware
 
-//restrictToLoggedinUserOnly is an inline middleware
-app.use('/url', restrictToLoggedinUserOnly, urlRoute)
-app.use('/', checkAuth, staticRoute)
+app.use('/', staticRoute)
+app.use('/url', restrictTo(["NORMAL", "ADMIN"]), urlRoute)
 app.use('/user', userRoute)
 
 app.get('/test', async (req, res) => {
